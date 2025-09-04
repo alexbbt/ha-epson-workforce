@@ -255,6 +255,13 @@ class EpsonPrinterCartridge(CoordinatorEntity, SensorEntity):
         return device_info
 
     @property
+    def name(self) -> str | None:  # type: ignore[override]
+        """Return the name of the sensor."""
+        if self._device_name:
+            return f"{self._device_name} {self.entity_description.name}"
+        return self.entity_description.name
+
+    @property
     def unique_id(self) -> str | None:  # type: ignore[override]
         """Return a unique ID for this sensor."""
         return f"{self._device_name_clean}_{self.entity_description.key}"
